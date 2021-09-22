@@ -1,5 +1,6 @@
 package br.com.limaisaias.dockdesafio.model;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
 
 @Entity
 @Data
+@Builder
 public class Model implements Serializable {
     private static final long serialVersionUID = 1L;
 
