@@ -4,6 +4,7 @@ import br.com.limaisaias.dockdesafio.exceptions.BusinessException;
 import br.com.limaisaias.dockdesafio.model.Model;
 import br.com.limaisaias.dockdesafio.repository.ModelRepository;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,6 +37,7 @@ public class ModelServiceTest {
     }
 
     @Test
+    @DisplayName("Testing whether to register Model")
     void create() throws BusinessException {
 
         when(repository.findById(Mockito.anyInt())).thenReturn(Optional.empty());
@@ -43,10 +45,11 @@ public class ModelServiceTest {
 
         Model modelSalvo = service.create(model);
 
-        assertEquals(modelSalvo.getLogic(), 44332511);
+        assertEquals(modelSalvo.getLogic(), 44332511, "Diferent Logic!");
     }
 
     @Test
+    @DisplayName("Testing if not Must register Model, as it already exists")
     void createExistsException() throws BusinessException {
 
         when(repository.findById(Mockito.anyInt())).thenReturn(Optional.of(model));
@@ -57,6 +60,7 @@ public class ModelServiceTest {
     }
 
     @Test
+    @DisplayName("Test Find By Logic")
     void findByLogic() {
 
         when(repository.findById(Mockito.anyInt())).thenReturn(Optional.of(model));
@@ -69,6 +73,7 @@ public class ModelServiceTest {
     }
 
     @Test
+    @DisplayName("Test Update")
     void update() throws BusinessException {
         Integer logic = 44332511;
 
@@ -79,7 +84,7 @@ public class ModelServiceTest {
 
         Model model2 = service.update(logic, model);
 
-        assertEquals(model2.getSerial(), "222555");
+        assertEquals("222555",model2.getSerial(), "Diferent Serial");
 
     }
 
@@ -89,6 +94,7 @@ public class ModelServiceTest {
     }
 
     @Test
+    @DisplayName("Must not update Model because Logic does not exist.\n")
     void updateLogicNotExistsException() throws BusinessException {
         when(repository.findById(Mockito.anyInt())).thenReturn(Optional.empty());
 
