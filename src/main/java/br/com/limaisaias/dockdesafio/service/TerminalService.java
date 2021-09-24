@@ -11,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
@@ -25,7 +26,7 @@ public class TerminalService {
     public Optional<Terminal> findByLogic(Integer logic) {
         return repository.findById(logic);
     }
-
+    @Transactional
     public Terminal update(Integer logic, Terminal terminal) throws BusinessException {
         validateTerminal(terminal);
         Optional<Terminal> optional = repository.findById(logic);
@@ -42,6 +43,7 @@ public class TerminalService {
         return repository.save(newTerminal);
     }
 
+    @Transactional
     public Terminal create(String stringTerminal) throws BusinessException {
         Terminal terminal = getTerminal(stringTerminal);
         validateTerminal(terminal);
@@ -63,7 +65,7 @@ public class TerminalService {
         schema.validate(new JSONObject(jsonInString)); // throws a ValidationException if this object is invalid
     }
 
-
+    @Transactional
     private Terminal save(Terminal terminal) {
 
         Optional<Terminal> optional = repository.findById(terminal.getLogic());
